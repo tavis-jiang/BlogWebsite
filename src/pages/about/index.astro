@@ -14,11 +14,11 @@ const headings = [
 ---
 
 <PageLayout title='About' {headings} comment>
-  <p>Developer / Designer</p>
+  <p>Undergraduate / Counter-Strike Gamer / Coding Amateur</p>
   <p>
-    Lorem ipsum dolor sit amet, vidit suscipit at mei. Quem denique mea id. Usu ei regione indoctum
-    dissentiunt, cu meliore fuisset mei, vel quod voluptua ne. Ex dicat impedit mel, at eum oratio
-    possit voluptatum.
+    Knowing a little bit about C++ and shell-scripting, quite interested in these. <br />
+    Now learning about Software at SJTU, and trying to be a coder. <br />
+    Majoring in Information Engineering, and try to learn software to make life easier.<br />
   </p>
   <p>
     Motto: Stay hungry, Stay foolish. <Spoiler>这里可以夹私货，比如为什么要演奏春日影！</Spoiler>
@@ -28,13 +28,15 @@ const headings = [
   {/* general-talk */}
   <h2 id='hobbies'>Hobbies</h2>
   <ul>
-    <li>Lorem ipsum dolor sit amet, vidit suscipit at mei.</li>
     <li>
-      Quem denique mea id. Usu ei regione indoctum dissentiunt, cu meliore fuisset mei, vel quod
-      voluptua ne.
+      <strong>Counter-Strike</strong>:Having invested a thousand hours on it, enjoy the feeling of competing and improving myself.
     </li>
-    <li>Ex dicat impedit mel, at eum oratio possit voluptatum.</li>
-    <li>Impetus fuisset ullamcorper pri cu, his posse iisque ad, aliquam honestatis usu id.</li>
+    <li>
+        <strong>Bodybuilding</strong>:Exercising always matters in our daily life, try to make my body stronger.
+    </li>
+    <li>
+      <strong>Music</strong>:4 year piano player, but haven't for 4 years
+    </li>
   </ul>
 
   {/* tools */}
@@ -50,24 +52,6 @@ const headings = [
         href: 'https://www.adobe.com/products/photoshop',
         icon: import('@/assets/tools/photoshop.svg?raw')
       },
-      {
-        name: 'Illustrator',
-        description: 'Vector Drawing',
-        href: 'https://www.adobe.com/products/illustrator',
-        icon: import('@/assets/tools/illustrator.svg?raw')
-      },
-      {
-        name: 'After Effects',
-        description: 'Motion Graphics',
-        href: 'https://www.adobe.com/products/aftereffects',
-        icon: import('@/assets/tools/aftereffects.svg?raw')
-      },
-      {
-        name: 'Premiere Pro',
-        description: 'Video Editing',
-        href: 'https://www.adobe.com/products/premiere',
-        icon: import('@/assets/tools/premiere.svg?raw')
-      }
     ]}
   />
   <ToolSection
@@ -81,23 +65,12 @@ const headings = [
         icon: import('@/assets/tools/chrome.svg?raw')
       },
       {
-        name: 'Firefox',
-        description: 'Browser',
-        href: 'https://www.mozilla.org/en-US/firefox',
-        icon: import('@/assets/tools/firefox.svg?raw')
-      },
-      {
-        name: 'Notion',
-        description: 'Note Taking',
-        href: 'https://www.notion.so/',
-        icon: import('@/assets/tools/notion.svg?raw')
-      },
-      {
-        name: 'Typora',
+        name: 'Obsidian',
         description: 'Markdown Editor',
-        href: 'https://typora.io/',
-        icon: import('@/assets/tools/typora.svg?raw')
-      }
+        href: 'https://www.obsidian.md',
+        icon: import('@/assets/tools/obsidian.svg?raw')
+      },
+
     ]}
   />
   <ToolSection
@@ -110,7 +83,7 @@ const headings = [
         href: 'https://code.visualstudio.com/',
         icon: import('@/assets/tools/vscode.svg?raw')
       },
-      {
+      { 
         name: 'Neovim',
         description: 'IDE',
         href: 'https://neovim.io/',
