@@ -11,8 +11,8 @@ import Section from '@/components/home/Section.astro'
 import SkillLayout from '@/components/home/SkillLayout.astro'
 import config from '@/site-config'
 
-const languages = ['Html', 'JavaScript', 'CSS', 'Shell']
-const frontend = ['TypeScript', 'Vite', 'Webpack', 'Astro']
+const languages = ['CPP', 'JavaScript', 'Python', 'Shell']
+const frontend = ['TypeScript', , 'Webpack', 'Astro']
 const backend = ['Vercel', 'Waline']
 
 const MAX_POSTS = 10
@@ -43,13 +43,13 @@ if (!images[imagePath])
       <div class='flex flex-col items-center gap-y-4'>
         <h1 class='text-3xl font-medium'>{config.author}</h1>
         <div class='flex flex-wrap justify-center gap-x-7 gap-y-3'>
-          <Label title='Somewhere'>
+          <Label title='Shanghai, China'>
             <Icon name='location' class='size-5' slot='icon' />
           </Label>
           <Label
             title='Source code'
             as='a'
-            href='https://github.com/cworld1/astro-theme-pure'
+            href='https://github.com/tavis-jiang/BlogWebsite.git'
             target='_blank'
           >
             <Icon name='github' class='size-5' slot='icon' />
@@ -75,11 +75,11 @@ if (!images[imagePath])
 
     <div id='content' class='animate flex flex-col gap-y-10 md:w-4/5 lg:w-5/6'>
       <Section title='About'>
-        <p class='text-muted-foreground'>Developer / Designer</p>
+        <p class='text-muted-foreground'>Undergraduate / Counter-Striker / Coding Amateur</p>
         <p class='text-muted-foreground'>
-          Lorem ipsum dolor sit amet, vidit suscipit at mei. Quem denique mea id. Usu ei regione
-          indoctum dissentiunt, cu meliore fuisset mei, vel quod voluptua ne. Ex dicat impedit mel,
-          at eum oratio possit voluptatum.
+        Knowing a little bit about C++ and shell-scripting, quite interested in these. <br />
+        Now learning about Software at SJTU, and trying to be a coder. <br />
+        Majoring in Information Engineering, and try to learn software to make life easier.<br />
         </p>
         <Button title='More about me' class='w-fit self-end' href='/about' variant='ahead' />
       </Section>
@@ -130,20 +130,18 @@ if (!images[imagePath])
       <Section title='Education'>
         <Card
           as='a'
-          heading='Lorem ipsum'
-          subheading='Lorem ipsum dolor sit amet, vidit suscipit at mei.'
-          date='August 2021 - July 2025'
-          href='https://www.youtube.com/watch?v=dQw4w9WgXcQ'
+          heading='Shanghai Jiaotong Univercity'
+          subheading=' Majoring in Information Engineering, and try to learn software to make life easier.'
+          date='September 2024 - July 2028'
+          href='https://www.sjtu.edu.cn/'
         >
-          {
-            /* <ul class='ms-4 list-disc text-muted-foreground'>
-          <li>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolore debitis recusandae, ut
-            molestiae laboriosam pariatur!
-          </li>
-          <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae, pariatur!</li>
-        </ul> */
-          }
+          <img
+            class='absolute end-0 z-0 m-0 -my-3 h-full w-1/2 object-cover opacity-40'
+            src='/images/sjtu.svg'
+             alt='SJTU Logo'
+             style="filter: drop-shadow(0 0 0 #B01020);"
+          />
+          
         </Card>
       </Section>
 
