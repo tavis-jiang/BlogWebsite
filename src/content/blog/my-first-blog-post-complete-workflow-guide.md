@@ -7,9 +7,6 @@ tags:
   - workflow
   - obsidian
   - astro
-heroImage:
-  src: ./my-first-blog-post/thumbnail.jpg
-  color: #B01020
 ---
 
 # Welcome to My Blog!
