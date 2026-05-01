@@ -20,15 +20,12 @@ const question = (prompt) => new Promise(resolve => rl.question(prompt, resolve)
 // Allow custom vault path via command line argument
 const customVaultPath = process.argv.find((arg, i) => i > 1 && !arg.startsWith('--'))
 
-// Determine vault path - check for Posts subdirectory
+// Determine vault path - ONLY sync from /obsidian/post/ (not entire vault)
 const getVaultPath = () => {
   if (customVaultPath) return customVaultPath
   if (process.env.OBSIDIAN_VAULT) return process.env.OBSIDIAN_VAULT
-  // If default path exists, use it
-  if (existsSync('./obsidian/posts')) return './obsidian/posts'
-  // Try vault root
-  if (existsSync('./obsidian')) return './obsidian'
-  return './obsidian/posts'
+  // ONLY use ./obsidian/post - never sync entire vault
+  return './obsidian/post'
 }
 
 const OBSIDIAN_DIR = getVaultPath()
