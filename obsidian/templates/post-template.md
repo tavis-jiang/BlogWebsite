@@ -1,42 +1,34 @@
 ---
-title: Your Post Title
-description: Short description for SEO
-publish-date: 2025-05-01T00:00:00Z
-tags: tag1, tag2, tag3
-hero-image: ./thumbnail.jpg
-hero-color: '#659EB9'
-draft: false
+title: '{{TITLE}}'
+description: 'Write a brief description here'
+publishDate: '{{DATE}}'
+tags:
+  - readme
+minutesRead: 10
 ---
 
-# Your Post Title
+> *Write a brief quote or description here.*
 
-Write your content here using Obsidian's markdown syntax.
+## Introduction
 
-## Features Supported
+Start writing your introduction here...
 
-- **Bold text** and *italic text*
-- [[Internal Link]] to other posts (will auto-convert)
-- Code blocks
-- Images in same folder
+## Section 1
 
-## Adding Images
+Your content...
 
-Put images in a folder with the same name as your post:
-```
-obsidian/posts/
-├── my-post.md
-└── my-post/
-    ├── image1.png
-    └── thumbnail.jpg
-```
+### Subsection
 
-Then reference them normally:
-```markdown
-![alt text](image1.png)
-```
+More details...
 
-## Publishing
+## Section 2
 
-1. Save this file in `obsidian/posts/`
-2. Run: `npm run sync-obsidian`
-3. The post will be synced to your blog
+Continue writing...
+
+## Conclusion
+
+Wrap up your thoughts...
+
+---
+
+💡 **After writing:** Run `npm run sync-obsidian` to publish!
