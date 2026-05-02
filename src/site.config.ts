@@ -117,8 +117,8 @@ export const integ: IntegrationUserConfig = {
     applyTip: [
       { name: 'Name', val: theme.title },
       { name: 'Desc', val: theme.description || 'Null' },
-      { name: 'Link', val: 'https://tavis-jiang.github.io/' },
-      { name: 'Avatar', val: 'https://tavis-jiang.github.io/favicon/favicon.ico' }
+      { name: 'Link', val: 'https://tavisj.top' },
+      { name: 'Avatar', val: 'https://tavisj.top/favicon/favicon.ico' }
     ],
     // Cache avatars in `public/avatars/` to improve user experience.
     cacheAvatar: false
