@@ -109,7 +109,7 @@ export function transformerRemoveNotationEscape(): ShikiTransformer {
         if (node.type === 'text') {
           node.value = node.value.replace('[\\!code', '[!code')
         }
-        else if ('children' in node) {
+        else if ('children' in node && Array.isArray(node.children)) {
           for (const child of node.children) {
             replace(child)
           }
