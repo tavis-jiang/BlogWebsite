@@ -176,7 +176,7 @@ export const integ: IntegrationUserConfig = {
       comment: true,
       locale: {
         reaction0: 'Like',
-        placeholder: 'Welcome to comment. (Email to receive replies. Login is unnecessary)'
+        placeholder: 'Leave a comment here~'
       },
       imageUploader: false
     }
