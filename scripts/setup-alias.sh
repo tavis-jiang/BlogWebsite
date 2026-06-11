@@ -3,7 +3,7 @@
 
 echo "📝 Setting up 'blog' command..."
 
-BLOG_SCRIPT="/Volumes/Files/BlogWebsite/scripts/blog.sh"
+BLOG_SCRIPT="/Volumes/External/files/BlogWebsite/scripts/blog.sh"
 
 # Detect shell
 if [ -n "$ZSH_VERSION" ]; then
@@ -26,7 +26,7 @@ cat >> "$SHELL_RC" << 'EOF'
 blog() {
     # Pass all arguments to the script
     # The script will cd to blog directory and create the post
-    "/Volumes/Files/BlogWebsite/scripts/blog.sh" "$@"
+    "/Volumes/External/files/BlogWebsite/scripts/blog.sh" "$@"
 }
 EOF
 
@@ -40,4 +40,4 @@ echo "   blog                           - Interactive mode"
 echo "   blog my-post                   - Quick create with filename"
 echo "   blog my-post 'My Post Title'   - Filename + title"
 echo ""
-echo "   After running, you'll be in /Volumes/Files/BlogWebsite"
+echo "   After running, you'll be in /Volumes/External/files/BlogWebsite"

@@ -3,10 +3,10 @@
 # Usage: blog ["filename"] ["title"] or just 'blog' for interactive mode
 
 # Change to blog directory FIRST (from anywhere)
-BLOG_DIR="/Volumes/Files/BlogWebsite"
+BLOG_DIR="/Volumes/External/files/BlogWebsite"
 cd "$BLOG_DIR"
 
-OBSIDIAN_POSTS_DIR="/Volumes/Files/Notes/obsidian /post"
+OBSIDIAN_POSTS_DIR="/Volumes/External/files/Notes/obsidian /post"
 TEMPLATE_FILE="$BLOG_DIR/obsidian/templates/post-template.md"
 
 # Colors for output

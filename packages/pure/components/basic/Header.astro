@@ -45,6 +45,14 @@ import { Icon } from '../user'
     {/* buttons */}
     <div class='z-30 flex gap-x-4 group-[.not-top]:gap-x-2' style='transition:gap 0.3s'>
       <button
+        id='toggleLang'
+        class='box-content rounded-md border px-1.5 py-1 text-xs font-medium transition-colors hover:bg-border sm:group-[.not-top]:rounded-xl'
+        aria-label='Switch language'
+        title='Switch language'
+      >
+        <span class='lang-text'>中</span>
+      </button>
+      <button
         id='toggleDarkMode'
         class='group/dark box-content size-5 rounded-md border p-1.5 transition-colors hover:bg-border sm:group-[.not-top]:rounded-xl'
       >
@@ -70,9 +78,49 @@ import { Icon } from '../user'
   if (toggleDarkModeElement) {
     toggleDarkModeElement.dataset.theme = localStorage.getItem('theme') || 'system'
   }
+
+  // Initialize language toggle label
+  const toggleLangElement = document.getElementById('toggleLang')
+  if (toggleLangElement) {
+    const lang = localStorage.getItem('site-lang') || 'en'
+    const langText = toggleLangElement.querySelector('.lang-text')
+    if (langText) {
+      langText.textContent = lang === 'zh' ? 'EN' : '中'
+    }
+  }
 </script>
 <script>
   import { setTheme, showToast } from '../../utils'
+
+  // Simple i18n inline logic — avoids external dependency in theme package
+  function getLang() {
+    return localStorage.getItem('site-lang') || 'en'
+  }
+
+  function setLang(lang) {
+    localStorage.setItem('site-lang', lang)
+  }
+
+  function toggleLang() {
+    const current = getLang()
+    const next = current === 'en' ? 'zh' : 'en'
+    setLang(next)
+
+    // Update html lang attribute
+    document.documentElement.lang = next === 'zh' ? 'zh-CN' : 'en-US'
+
+    // Update the toggle button text
+    const langBtn = document.getElementById('toggleLang')
+    if (langBtn) {
+      const langText = langBtn.querySelector('.lang-text')
+      if (langText) {
+        langText.textContent = next === 'zh' ? 'EN' : '中'
+      }
+    }
+
+    // Dispatch custom event so other components can react
+    window.dispatchEvent(new CustomEvent('lang-change', { detail: { lang: next } }))
+  }
 
   class HeaderComponent extends HTMLElement {
     connectedCallback() {
@@ -85,14 +133,16 @@ import { Icon } from '../user'
         preScrollY = window.scrollY
       })
 
+      // Language toggle
+      const langBtn = this.querySelector('#toggleLang') as HTMLElement
+      langBtn?.addEventListener('click', () => {
+        const newLang = toggleLang()
+        showToast({ message: `Language: ${newLang === 'zh' ? '中文' : 'English'}` })
+      })
+
       // Dark Mode
       const darkModeBtn = this.querySelector('#toggleDarkMode') as HTMLElement
       darkModeBtn.addEventListener('click', () => {
-        // Old way: dispatch event
-        // const toggleDarkModeEvent = new CustomEvent('theme-change', {
-        //   detail: { theme: localStorage.getItem('theme') === 'light' ? 'dark' : 'light' }
-        // })
-        // document.dispatchEvent(toggleDarkModeEvent)
         const newTheme = setTheme(undefined, true)
         darkModeBtn.dataset.theme = newTheme
         showToast({ message: `Set theme to ${newTheme}` })
@@ -141,6 +191,13 @@ import { Icon } from '../user'
   }
   :global(.dark) header-component.not-top {
     background-color: hsl(var(--muted) / var(--un-bg-opacity));
+  }
+
+  /* Language toggle */
+  #toggleLang {
+    line-height: 1.25;
+    min-width: 2rem;
+    text-align: center;
   }
 
   /* header menu */
