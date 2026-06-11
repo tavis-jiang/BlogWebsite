@@ -48,6 +48,16 @@ const {
       <Footer />
     </div>
 
+    {/* i18n: apply language after full DOM is ready */}
+    <script is:inline>
+      // If the header's inline script hasn't translated yet (e.g. footer elements),
+      // run translation again after DOM is fully parsed
+      if (typeof window.__translateAll === 'function') {
+        const lang = localStorage.getItem('site-lang') || 'en'
+        window.__translateAll(lang)
+      }
+    </script>
+
     {/* Set highlight color */}
     <style define:vars={{ highlightColor }}>
       :global(.highlight) {

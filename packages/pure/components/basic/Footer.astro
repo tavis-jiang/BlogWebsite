@@ -41,7 +41,7 @@ const footerLink1 = footerConf.links?.filter(({ pos }) => pos === 1) || []
                     .filter(({ pos }) => pos === 2)
                     .map(({ title, link, style }) => (
                       <span>
-                        <a href={link} target='_blank' class={style}>
+                        <a href={link} target='_blank' class={style} data-i18n-key={title}>
                           {title}
                         </a>
                       </span>
@@ -53,7 +53,7 @@ const footerLink1 = footerConf.links?.filter(({ pos }) => pos === 1) || []
         </div>
         {
           footerConf.credits && (
-            <span>
+            <span data-i18n-key='Powered by Astro & Pure theme'>
               <a href='https://github.com/withastro/astro' target='_blank'>
                 Astro
               </a>

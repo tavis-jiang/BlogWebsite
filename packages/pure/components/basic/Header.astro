@@ -28,13 +28,14 @@ import { Icon } from '../user'
               class='w-full flex-none grow py-2 text-right font-medium transition-none hover:text-primary sm:w-fit sm:px-3'
               aria-label='Nav menu item'
               data-astro-prefetch
+              data-nav-item
             >
               {item.title}
             </a>
           ))
         }
         <div class='flex w-full grow flex-row justify-end gap-x-3 sm:w-fit sm:gap-x-5'>
-          <a class='px-1 py-2 transition-none sm:px-2' href='/search' title='Search'>
+          <a class='px-1 py-2 transition-none sm:px-2' href='/search' title='Search' data-search-link>
             <span class='sr-only'>Search</span>
             <Icon name='search' class='size-5' />
           </a>
@@ -72,59 +73,149 @@ import { Icon } from '../user'
   </div>
 </header-component>
 
-{/* Use inline to load icon quicker firstly */}
 <script is:inline>
+  // === i18n translations (embedded for fast initial load) ===
+  const I18N = {
+    en: {
+      'Blog': 'Blog',
+      'Projects': 'Projects',
+      'Links': 'Links',
+      'About': 'About',
+      'Search': 'Search',
+      'Menu': 'Menu',
+      'Site Policy': 'Site Policy',
+      'Powered by Astro & Pure theme': 'Astro & Pure theme powered',
+      'Posts': 'Posts',
+      'Education': 'Education',
+      'Skills': 'Skills',
+      'Languages': 'Languages',
+      'Frontend': 'Frontend',
+      'Backend': 'Backend',
+      'More about me': 'More about me',
+      'More posts': 'More posts',
+      'Get Template': 'Get Template',
+      'Tags': 'Tags',
+      'Archives': 'Archives',
+      'Terms': 'Terms',
+      'Home': 'Home'
+    },
+    zh: {
+      'Blog': '博客',
+      'Projects': '项目',
+      'Links': '友链',
+      'About': '关于',
+      'Search': '搜索',
+      'Menu': '菜单',
+      'Site Policy': '站点政策',
+      'Powered by Astro & Pure theme': '由 Astro & Pure 主题驱动',
+      'Posts': '文章',
+      'Education': '教育背景',
+      'Skills': '技能',
+      'Languages': '编程语言',
+      'Frontend': '前端',
+      'Backend': '后端',
+      'More about me': '了解更多',
+      'More posts': '更多文章',
+      'Get Template': '获取模板',
+      'Tags': '标签',
+      'Archives': '归档',
+      'Terms': '条款',
+      'Home': '首页'
+    }
+  }
+
+  function getLang() {
+    return localStorage.getItem('site-lang') || 'en'
+  }
+
+  function translateAll(lang) {
+    // Translate nav menu items
+    document.querySelectorAll('[data-nav-item]').forEach(el => {
+      const orig = el.getAttribute('data-nav-original')
+      if (orig) {
+        const translated = (I18N[lang] && I18N[lang][orig]) || orig
+        // Preserve whitespace around text for layout
+        el.childNodes.forEach(node => {
+          if (node.nodeType === 3) { // Text node
+            node.textContent = ' ' + translated + ' '
+          }
+        })
+      }
+    })
+
+    // Translate search link title
+    const searchLink = document.querySelector('[data-search-link]')
+    if (searchLink) {
+      if (lang === 'zh') {
+        searchLink.setAttribute('title', I18N.zh['Search'])
+      } else {
+        searchLink.setAttribute('title', I18N.en['Search'])
+      }
+      // Also update sr-only span
+      const srOnly = searchLink.querySelector('.sr-only')
+      if (srOnly) {
+        srOnly.textContent = lang === 'zh' ? I18N.zh['Search'] : I18N.en['Search']
+      }
+    }
+
+    // Translate elements with data-i18n-key
+    document.querySelectorAll('[data-i18n-key]').forEach(el => {
+      const key = el.getAttribute('data-i18n-key')
+      if (key && key in I18N.en) {
+        const text = lang === 'zh' ? (I18N.zh[key] || I18N.en[key]) : I18N.en[key]
+        // If element has no children or only text children, update textContent
+        if (!el.children.length) {
+          el.textContent = text
+        } else {
+          // For elements with child elements (like Button), find and update the text-bearing child
+          // Look for <p> or <span> children that match the original English text
+          el.querySelectorAll('p, span').forEach(child => {
+            const trimmed = child.textContent?.trim()
+            if (trimmed && I18N.en[key]?.includes(trimmed)) {
+              child.textContent = text
+            }
+          })
+        }
+      }
+    })
+
+    // Update html lang
+    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en-US'
+
+    // Update toggle button text
+    const langBtn = document.getElementById('toggleLang')
+    if (langBtn) {
+      const span = langBtn.querySelector('.lang-text')
+      if (span) span.textContent = lang === 'zh' ? 'EN' : '中'
+    }
+  }
+
+  // === Save original text on nav items ===
+  document.querySelectorAll('[data-nav-item]').forEach(el => {
+    if (!el.hasAttribute('data-nav-original')) {
+      el.setAttribute('data-nav-original', el.textContent.trim())
+    }
+  })
+
+  // Expose for module script access
+  window.__translateAll = translateAll
+
+  // === Initialize language on page load ===
+  const currentLang = getLang()
+  translateAll(currentLang)
+
+  // === Dark mode init (original) ===
   const toggleDarkModeElement = document.getElementById('toggleDarkMode')
   if (toggleDarkModeElement) {
     toggleDarkModeElement.dataset.theme = localStorage.getItem('theme') || 'system'
-  }
-
-  // Initialize language toggle label
-  const toggleLangElement = document.getElementById('toggleLang')
-  if (toggleLangElement) {
-    const lang = localStorage.getItem('site-lang') || 'en'
-    const langText = toggleLangElement.querySelector('.lang-text')
-    if (langText) {
-      langText.textContent = lang === 'zh' ? 'EN' : '中'
-    }
   }
 </script>
 <script>
   import { setTheme, showToast } from '../../utils'
 
-  // Simple i18n inline logic — avoids external dependency in theme package
-  function getLang() {
-    return localStorage.getItem('site-lang') || 'en'
-  }
-
-  function setLang(lang) {
-    localStorage.setItem('site-lang', lang)
-  }
-
-  function toggleLang() {
-    const current = getLang()
-    const next = current === 'en' ? 'zh' : 'en'
-    setLang(next)
-
-    // Update html lang attribute
-    document.documentElement.lang = next === 'zh' ? 'zh-CN' : 'en-US'
-
-    // Update the toggle button text
-    const langBtn = document.getElementById('toggleLang')
-    if (langBtn) {
-      const langText = langBtn.querySelector('.lang-text')
-      if (langText) {
-        langText.textContent = next === 'zh' ? 'EN' : '中'
-      }
-    }
-
-    // Dispatch custom event so other components can react
-    window.dispatchEvent(new CustomEvent('lang-change', { detail: { lang: next } }))
-  }
-
   class HeaderComponent extends HTMLElement {
     connectedCallback() {
-      // Header
+      // Header scroll behavior
       let preScrollY = window.scrollY
       this.classList.toggle('not-top', preScrollY > 20)
       window.addEventListener('scroll', () => {
@@ -136,8 +227,20 @@ import { Icon } from '../user'
       // Language toggle
       const langBtn = this.querySelector('#toggleLang') as HTMLElement
       langBtn?.addEventListener('click', () => {
-        const newLang = toggleLang()
-        showToast({ message: `Language: ${newLang === 'zh' ? '中文' : 'English'}` })
+        // Re-read translateAll from the inline script scope
+        // It's globally available since is:inline scripts run in global scope
+        const current = localStorage.getItem('site-lang') || 'en'
+        const next = current === 'en' ? 'zh' : 'en'
+        localStorage.setItem('site-lang', next)
+
+        // Call the global translateAll function (defined in inline script)
+        if (typeof window.__translateAll === 'function') {
+          window.__translateAll(next)
+        }
+
+        // Dispatch event for other scripts
+        window.dispatchEvent(new CustomEvent('lang-change', { detail: { lang: next } }))
+        showToast({ message: next === 'zh' ? '已切换为中文' : 'Switched to English' })
       })
 
       // Dark Mode

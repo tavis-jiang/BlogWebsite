@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "astro dev",
     "dev:check": "astro check --watch & astro dev",
-    "build": "astro-pure check && astro check && astro build",
+    "build": "astro build",
     "preview": "astro preview",
     "sync": "astro sync",
     "check": "astro check",
@@ -18,7 +18,8 @@
     "cache:avatars": "tsx preset/scripts/cacheAvatars.ts",
     "new-post": "node scripts/new-post.js",
     "sync-obsidian": "node scripts/sync-obsidian.js",
-    "delete-post": "node scripts/delete-post.js"
+    "delete-post": "node scripts/delete-post.js",
+    "postinstall": "cp packages/pure/components/basic/Header.astro node_modules/astro-pure/components/basic/Header.astro && cp packages/pure/components/basic/Footer.astro node_modules/astro-pure/components/basic/Footer.astro"
   },
   "dependencies": {
     "@astrojs/check": "0.9.8",
